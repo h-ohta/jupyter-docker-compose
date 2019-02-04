@@ -1,0 +1,5 @@
+pandas
+matplotlib
+numpy
+jupyter_contrib_nbextensions
+jupyter_nbextensions_configurator
