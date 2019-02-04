@@ -20,6 +20,13 @@ USER $NB_USER
 COPY ./requirements.txt /tmp/
 RUN conda install --yes --file /tmp/requirements.txt && \
     fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER && \
-    jupyter contrib nbextension install && \
+    fix-permissions /home/$NB_USER
+
+# Install jupyter plugins
+
+USER root
+
+RUN jupyter contrib nbextension install && \
     jupyter nbextensions_configurator enable
+
+USER $NB_USER
