@@ -1,5 +1,7 @@
 pandas
 matplotlib
 numpy
+autopep8
 jupyter_contrib_nbextensions
 jupyter_nbextensions_configurator
+
