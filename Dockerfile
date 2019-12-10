@@ -1,32 +1,19 @@
 # Choose your desired base image
-FROM jupyter/base-notebook:latest
-
-# Create a Python 2.x environment using conda including at least the ipython kernel
-# and the kernda utility. Add any additional packages you want available for use
-# in a Python 2 notebook to the first line here (e.g., pandas, matplotlib, etc.)
-RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 ipython ipykernel kernda && \
-    conda clean -tipsy
-
-USER root
-
-# Create a global kernelspec in the image and modify it so that it properly activates
-# the python2 conda environment.
-RUN $CONDA_DIR/envs/python2/bin/python -m ipykernel install && \
-$CONDA_DIR/envs/python2/bin/kernda -o -y /usr/local/share/jupyter/kernels/python2/kernel.json
-
-USER $NB_USER
+FROM jupyter/datascience-notebook:latest
 
 # Install from requirements.txt file
 COPY ./requirements.txt /tmp/
-RUN conda install --yes --file /tmp/requirements.txt && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+RUN pip install --upgrade pip
+RUN pip install -r /tmp/requirements.txt
 
-# Install jupyter plugins
+# Install 
+RUN jupyter labextension install @lckr/jupyterlab_variableinspector
+RUN jupyter labextension install @jupyterlab/toc
 
-USER root
+RUN pip install jupyterlab_code_formatter
+RUN jupyter labextension install @ryantam626/jupyterlab_code_formatter
+RUN jupyter serverextension enable --py jupyterlab_code_formatter
 
-RUN jupyter contrib nbextension install && \
-    jupyter nbextensions_configurator enable
-
-USER $NB_USER
+RUN pip install --pre jupyter-lsp
+RUN jupyter labextension install @krassowski/jupyterlab-lsp
+RUN pip install python-language-server[all]

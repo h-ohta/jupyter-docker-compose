@@ -1,6 +1,6 @@
 version: '2.2'
 services:
-  jupyter:
+  jupyterlab:
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,6 +10,6 @@ services:
       - ./work:/home/jovyan/work:rw
       - ./.local:/home/jovyan/.local:rw
       - ./.nbconfig:/home/jovyan/.jupyter/nbconfig:rw
-    command: start-notebook.sh --NotebookApp.token=''
+    command: start.sh jupyter lab --NotebookApp.token=''
     restart: always
  
