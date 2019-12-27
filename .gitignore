@@ -1,5 +1,10 @@
-.local/*
-.nbconfig/*
+# ignore all
+*
+
+# add all directory to whitelist 
+!*/
+
+# add each files to whitelist 
 !.gitkeep
 
-workspace
+
