@@ -8,8 +8,8 @@ services:
       - 8888:8888
     volumes:
       - ./work:/home/jovyan/work:rw
-      - ./.local:/home/jovyan/.local:rw
-      - ./.nbconfig:/home/jovyan/.jupyter/nbconfig:rw
+      - ./settings/local:/home/jovyan/.local:rw
+      - ./settings/jupyter:/home/jovyan/.jupyter:rw
     command: start.sh jupyter lab --NotebookApp.token=''
     restart: always
  
